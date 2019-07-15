@@ -73,6 +73,8 @@ if(SUPPORTS_DTS)
   # Run the C preprocessor on an empty C source file that has one or
   # more DTS source files -include'd into it to create the
   # intermediary file *.dts.pre.tmp
+
+  message(STATUS ${CMAKE_C_COMPILER})
   execute_process(
     COMMAND ${CMAKE_C_COMPILER}
     -x assembler-with-cpp

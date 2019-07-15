@@ -33,7 +33,8 @@ set(CMAKE_SYSTEM_VERSION ${PROJECT_VERSION})
 set(BUILD_SHARED_LIBS OFF)
 
 if(NOT (COMPILER STREQUAL "host-gcc"))
-  include(${TOOLCHAIN_ROOT}/cmake/toolchain/${ZEPHYR_TOOLCHAIN_VARIANT}/target.cmake)
+  #include(${TOOLCHAIN_ROOT}/cmake/toolchain/${ZEPHYR_TOOLCHAIN_VARIANT}/target.cmake)
+  include(${CMAKE_TOOLCHAIN_FILE})
 endif()
 
 # The 'generic' compiler and the 'target' compiler might be different,
@@ -45,6 +46,7 @@ unset(CMAKE_C_COMPILER CACHE)
 # Configure the toolchain based on what toolchain technology is used
 # (gcc, host-gcc etc.)
 include(${ZEPHYR_BASE}/cmake/compiler/${COMPILER}/target.cmake OPTIONAL)
+include(${CMAKE_TOOLCHAIN_FILE})
 
 # Uniquely identify the toolchain wrt. it's capabilities.
 #
@@ -57,5 +59,5 @@ include(${ZEPHYR_BASE}/cmake/compiler/${COMPILER}/target.cmake OPTIONAL)
 # It is not clear how this signature should be constructed. The
 # strategy chosen is to md5sum the CC binary.
 
-file(MD5 ${CMAKE_C_COMPILER} CMAKE_C_COMPILER_MD5_SUM)
+file(MD5 ${TOOLCHAIN_HOME}${CMAKE_C_COMPILER} CMAKE_C_COMPILER_MD5_SUM)
 set(TOOLCHAIN_SIGNATURE ${CMAKE_C_COMPILER_MD5_SUM})
